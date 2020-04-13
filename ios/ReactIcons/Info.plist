@@ -38,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -53,5 +53,42 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Black.ttf</string>
+		<string>BlackItalic.ttf</string>
+		<string>Bold.ttf</string>
+		<string>BoldItalic.ttf</string>
+		<string>ExtraBold.ttf</string>
+		<string>ExtraBoldItalic.ttf</string>
+		<string>ExtraLight.ttf</string>
+		<string>ExtraLightItalic.ttf</string>
+		<string>Italic.ttf</string>
+		<string>Light.ttf</string>
+		<string>LightItalic.ttf</string>
+		<string>Medium.ttf</string>
+		<string>MediumItalic.ttf</string>
+		<string>Regular.ttf</string>
+		<string>SemiBold.ttf</string>
+		<string>SemiBoldItalic.ttf</string>
+		<string>Thin.ttf</string>
+		<string>ThinItalic.ttf</string>
+		<string>AntDesign.ttf</string>
+		<string>Entypo.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Feather.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>FontAwesome5_Brands.ttf</string>
+		<string>FontAwesome5_Regular.ttf</string>
+		<string>FontAwesome5_Solid.ttf</string>
+		<string>Fontisto.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>Ionicons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>MaterialIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Zocial.ttf</string>
+	</array>
 </dict>
 </plist>
