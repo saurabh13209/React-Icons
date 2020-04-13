@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './src/HomeScreen';
 import { fontCustomSize } from './src/common/CustomSize';
+import IconInfo from './src/IconInfo';
 
 const StackNavigator = createStackNavigator();
 
@@ -12,6 +13,7 @@ export default App = () => {
     <NavigationContainer>
       <StackNavigator.Navigator>
         <StackNavigator.Screen component={HomeScreen} name="Home" options={{ title: "React Icons", headerTintColor: "#fff", headerStyle: { backgroundColor: "#1F1F1F", elevation: fontCustomSize(8) } }} />
+        <StackNavigator.Screen component={IconInfo} name="IconInfo" options={{ title: "Info", headerTintColor: "#fff", headerStyle: { backgroundColor: "#1F1F1F", elevation: fontCustomSize(8) } }} />
       </StackNavigator.Navigator>
     </NavigationContainer>
   );
