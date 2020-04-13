@@ -15,8 +15,13 @@ export default HomeScreen = ({ navigation }) => {
 
     DynamicView = () => {
         if (searchText == "") {
+            var listData = ["All", ...Object.keys(IconData)];
+            var totalCount = 0;
+            Object.keys(IconData).forEach(eachObj => {
+                totalCount += Object.keys(IconData[eachObj]).length;
+            })
             return (<FlatList
-                data={Object.keys(IconData)}
+                data={listData}
                 renderItem={({ item }) => (<TouchableNativeFeedback
                     onPress={() => {
                         Store.chatArray = item
@@ -27,9 +32,11 @@ export default HomeScreen = ({ navigation }) => {
                         <Text style={{ fontFamily: 'Bold', color: "#fff", fontSize: fontCustomSize(16) }}>
                             {item}
                         </Text>
-                        <Text style={{ fontFamily: 'Bold', color: "#fff", fontSize: fontCustomSize(16) }}>
-                            {Object.keys(IconData[item]).length}
-                        </Text>
+                        {item == "All" ? <Text style={{ fontFamily: 'Bold', color: "#fff", fontSize: fontCustomSize(16) }}>
+                            {totalCount}
+                        </Text> : <Text style={{ fontFamily: 'Bold', color: "#fff", fontSize: fontCustomSize(16) }}>
+                                {Object.keys(IconData[item]).length}
+                            </Text>}
                     </View>
                 </TouchableNativeFeedback>)}
                 keyExtractor={(item) => (item)}
@@ -69,10 +76,15 @@ export default HomeScreen = ({ navigation }) => {
             <StatusBar barStyle="light-content" backgroundColor="black" />
             <View style={{ padding: fontCustomSize(10), width: Dimensions.get("window").width }}>
                 <TextInput
+                    autoCapitalize="none"
                     placeholder="Search icon"
                     placeholderTextColor="#aaa"
                     value={searchText}
                     onChangeText={res => {
+                        setSearchText(res)
+                        if (res.search(/[\[\]?*+|{}\\()@.\n\r]/) != -1) {
+                            return
+                        }
                         var tempArray = [];
                         var containKey = [];
                         Object.keys(IconData).forEach(title => {
@@ -96,7 +108,6 @@ export default HomeScreen = ({ navigation }) => {
                             })
                         })
                         setSearchData(tempArray);
-                        setSearchText(res)
                     }}
                     keyboardAppearance="dark"
                     autoFocus={true}

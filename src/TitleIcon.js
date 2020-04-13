@@ -10,26 +10,47 @@ export default TitleIconScreen = (props) => {
 
     const [searchText, setSearchText] = useState("");
     const [searchData, setSearchData] = useState([]);
-    console.log(props.route.params.title)
     useEffect(() => {
         var tempArray = [];
         var containKey = [];
-        Object.keys(IconData[props.route.params.title]).forEach(item => {
-            if (containKey.includes(props.route.params.title)) {
-                tempArray.forEach((obj, index) => {
-                    if (obj.title == [props.route.params.title]) {
-                        tempArray[index]["data"].push(item)
-                        return
+        if (props.route.params.title == "All") {
+            Object.keys(IconData).forEach(title => {
+                Object.keys(IconData[title]).forEach(item => {
+                    if (containKey.includes(title)) {
+                        tempArray.forEach((obj, index) => {
+                            if (obj.title == [title]) {
+                                tempArray[index]["data"].push(item)
+                                return
+                            }
+                        })
+                    } else {
+                        tempArray.push({
+                            title: title,
+                            data: [item]
+                        })
+                        containKey.push(title)
                     }
                 })
-            } else {
-                tempArray.push({
-                    title: props.route.params.title,
-                    data: [item]
-                })
-                containKey.push(props.route.params.title)
-            }
-        })
+            })
+        } else {
+            Object.keys(IconData[props.route.params.title]).forEach(item => {
+                if (containKey.includes(props.route.params.title)) {
+                    tempArray.forEach((obj, index) => {
+                        if (obj.title == [props.route.params.title]) {
+                            tempArray[index]["data"].push(item)
+                            return
+                        }
+                    })
+                } else {
+                    tempArray.push({
+                        title: props.route.params.title,
+                        data: [item]
+                    })
+                    containKey.push(props.route.params.title)
+                }
+            })
+
+        }
         setSearchData(tempArray);
     }, [])
 
@@ -38,32 +59,59 @@ export default TitleIconScreen = (props) => {
             <StatusBar barStyle="light-content" backgroundColor="black" />
             <View style={{ padding: fontCustomSize(10), width: Dimensions.get("window").width }}>
                 <TextInput
+                    autoCapitalize="none"
                     placeholder={"Search icon in " + [props.route.params.title]}
                     placeholderTextColor="#aaa"
                     value={searchText}
                     onChangeText={res => {
+                        setSearchText(res)
+                        if (res.search(/[\[\]?*+|{}\\()@.\n\r]/) != -1) {
+                            return
+                        }
                         var tempArray = [];
                         var containKey = [];
-                        Object.keys(IconData[props.route.params.title]).forEach(item => {
-                            if (item.search(res) >= 0) {
-                                if (containKey.includes(props.route.params.title)) {
-                                    tempArray.forEach((obj, index) => {
-                                        if (obj.title == [props.route.params.title]) {
-                                            tempArray[index]["data"].push(item)
-                                            return
+                        if (props.route.params.title == "All") {
+                            Object.keys(IconData).forEach(title => {
+                                Object.keys(IconData[title]).forEach(item => {
+                                    if (item.search(res) >= 0) {
+                                        if (containKey.includes(title)) {
+                                            tempArray.forEach((obj, index) => {
+                                                if (obj.title == [title]) {
+                                                    tempArray[index]["data"].push(item)
+                                                    return
+                                                }
+                                            })
+                                        } else {
+                                            tempArray.push({
+                                                title: title,
+                                                data: [item]
+                                            })
+                                            containKey.push(title)
                                         }
-                                    })
-                                } else {
-                                    tempArray.push({
-                                        title: props.route.params.title,
-                                        data: [item]
-                                    })
-                                    containKey.push(props.route.params.title)
+                                    }
+                                })
+                            })
+                        } else {
+                            Object.keys(IconData[props.route.params.title]).forEach(item => {
+                                if (item.search(res) >= 0) {
+                                    if (containKey.includes(props.route.params.title)) {
+                                        tempArray.forEach((obj, index) => {
+                                            if (obj.title == [props.route.params.title]) {
+                                                tempArray[index]["data"].push(item)
+                                                return
+                                            }
+                                        })
+                                    } else {
+                                        tempArray.push({
+                                            title: props.route.params.title,
+                                            data: [item]
+                                        })
+                                        containKey.push(props.route.params.title)
+                                    }
                                 }
-                            }
-                        })
+                            })
+                        }
                         setSearchData(tempArray);
-                        setSearchText(res)
                     }}
                     keyboardAppearance="dark"
                     autoFocus={true}
@@ -91,9 +139,7 @@ export default TitleIconScreen = (props) => {
                         </View>
                     </TouchableNativeFeedback>
                 )}
-                renderSectionHeader={({ section }) => (
-                    null
-                )}
+                renderSectionHeader={({ section }) => ([props.route.params.title] == "All" ? <Text style={{ backgroundColor: "#000", paddingBottom: 10, paddingTop: 10, fontFamily: "Bold", color: "white", fontSize: fontCustomSize(16) }} >{section.title}</Text> : null)}
             />
         </View>
     );

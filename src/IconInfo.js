@@ -40,10 +40,10 @@ export default IconInfo = (props) => {
                 }}>
                     <Text style={[styles.codeStyle, { marginBottom: 10 }]}>import React from 'react'</Text>
                     <Text style={styles.codeStyle}>import {getIconName()[0]} from {getIconName()[1]}</Text>
-                    <Text style={[styles.codeStyle, { marginTop: 10 }]}>export default App = () => {"{\n\t\t\t\t\t"}return ({"\n\t\t\t\t\t\t\t\t\t\t"}{"<" + getIconName()[0] + " name=\"" + props.route.params.item}" color="black" size={"{40} />\n\t\t\t\t\t)\n}"}  </Text>
+                    <Text style={[styles.codeStyle, { marginTop: 10 }]}>export default App = () => {"{\n\t\t\t\t\t"}return ({"\n\t\t\t\t\t\t\t\t\t\t"}{"<" + getIconName()[0] + " name=\"" + props.route.params.item}" color="white" size={"{40} />\n\t\t\t\t\t)\n}"}  </Text>
                 </View>
                 <View style={{
-                    flexDirection: 'column', marginTop: 10, backgroundColor: '#0d0d0d',
+                    flexDirection: 'column', marginTop: 10, backgroundColor: '#252525',
                     padding: 10, borderRadius: fontCustomSize(7)
                 }}>
                     <Text style={{ fontFamily: 'Regular', color: 'white', fontSize: fontCustomSize(16), marginBottom: 10 }}>Installation </Text>
