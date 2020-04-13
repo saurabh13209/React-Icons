@@ -89,6 +89,8 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>CodeBold.ttf</string>
+		<string>CodeRegular.ttf</string>
 	</array>
 </dict>
 </plist>
