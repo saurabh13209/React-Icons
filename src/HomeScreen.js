@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StatusBar, Dimensions } from 'react-native';
+import { View, Text, StatusBar, Dimensions, BackHandler } from 'react-native';
 import { TextInput, FlatList, TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { fontCustomSize } from './common/CustomSize';
 import IconData from './common/IconData';
 import { SectionGrid } from 'react-native-super-grid';
 import { IconType } from './common/SetIcon';
+import Store from './Mobx/Store';
 
 export default HomeScreen = ({ navigation }) => {
 
     const [searchText, setSearchText] = useState("");
     const [searchData, setSearchData] = useState([]);
 
+
     DynamicView = () => {
         if (searchText == "") {
             return (<FlatList
                 data={Object.keys(IconData)}
                 renderItem={({ item }) => (<TouchableNativeFeedback
+                    onPress={() => {
+                        Store.chatArray = item
+                        navigation.navigate('TitleInfo', { title: item })
+                    }}
                     background={TouchableNativeFeedback.Ripple("#1f1f1f")}>
                     <View style={{ padding: 10, flexDirection: 'row', justifyContent: 'space-between', marginRight: 10 }} >
                         <Text style={{ fontFamily: 'Bold', color: "#fff", fontSize: fontCustomSize(16) }}>
@@ -63,30 +69,30 @@ export default HomeScreen = ({ navigation }) => {
             <StatusBar barStyle="light-content" backgroundColor="black" />
             <View style={{ padding: fontCustomSize(10), width: Dimensions.get("window").width }}>
                 <TextInput
+                    placeholder="Search icon"
+                    placeholderTextColor="#aaa"
+                    value={searchText}
                     onChangeText={res => {
-                        if (res == "") { setSearchText(""); return }
                         var tempArray = [];
                         var containKey = [];
                         Object.keys(IconData).forEach(title => {
                             Object.keys(IconData[title]).forEach(item => {
-                                item.split("-").forEach(word => {
-                                    if (word.search(res) >= 0) {
-                                        if (containKey.includes(title)) {
-                                            tempArray.forEach((obj, index) => {
-                                                if (obj.title == [title]) {
-                                                    tempArray[index]["data"].push(item)
-                                                    return
-                                                }
-                                            })
-                                        } else {
-                                            tempArray.push({
-                                                title: title,
-                                                data: [item]
-                                            })
-                                            containKey.push(title)
-                                        }
+                                if (item.search(res) >= 0) {
+                                    if (containKey.includes(title)) {
+                                        tempArray.forEach((obj, index) => {
+                                            if (obj.title == [title]) {
+                                                tempArray[index]["data"].push(item)
+                                                return
+                                            }
+                                        })
+                                    } else {
+                                        tempArray.push({
+                                            title: title,
+                                            data: [item]
+                                        })
+                                        containKey.push(title)
                                     }
-                                })
+                                }
                             })
                         })
                         setSearchData(tempArray);
