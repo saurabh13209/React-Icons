@@ -1,10 +1,42 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableNativeFeedback } from 'react-native';
 import { IconType } from './common/SetIcon';
 import { fontCustomSize } from './common/CustomSize';
 import IconData from './common/IconData';
+import { SectionGrid } from 'react-native-super-grid';
 
 export default IconInfo = (props) => {
+
+    const [searchData, setSearchData] = useState([]);
+
+
+    useEffect(() => {
+        console.log(props.route.params.item);
+        var tempArray = [];
+        var containKey = [];
+        Object.keys(IconData).forEach(title => {
+            Object.keys(IconData[title]).forEach(item => {
+                if (item != props.route.params.item)
+                    if (item.search(props.route.params.item) >= 0) {
+                        if (containKey.includes(title)) {
+                            tempArray.forEach((obj, index) => {
+                                if (obj.title == [title]) {
+                                    tempArray[index]["data"].push(item)
+                                    return
+                                }
+                            })
+                        } else {
+                            tempArray.push({
+                                title: title,
+                                data: [item]
+                            })
+                            containKey.push(title)
+                        }
+                    }
+            })
+        })
+        setSearchData(tempArray);
+    }, [])
 
     getIconName = () => {
         var iconName = props.route.params.section.title == Object.keys(IconData)[0] ? ["AntIcon", 'react-native-vector-icons/AntDesign'] :
@@ -42,13 +74,32 @@ export default IconInfo = (props) => {
                     <Text style={styles.codeStyle}>import {getIconName()[0]} from {getIconName()[1]}</Text>
                     <Text style={[styles.codeStyle, { marginTop: 10 }]}>export default App = () => {"{\n\t\t\t\t\t"}return ({"\n\t\t\t\t\t\t\t\t\t\t"}{"<" + getIconName()[0] + " name=\"" + props.route.params.item}" color="white" size={"{40} />\n\t\t\t\t\t)\n}"}  </Text>
                 </View>
-                <View style={{
-                    flexDirection: 'column', marginTop: 10, backgroundColor: '#252525',
-                    padding: 10, borderRadius: fontCustomSize(7)
-                }}>
-                    <Text style={{ fontFamily: 'Regular', color: 'white', fontSize: fontCustomSize(16), marginBottom: 10 }}>Installation </Text>
-                    <Text style={[styles.codeStyle, { paddingLeft: 15, paddingRight: 15, paddingBottom: 10 }]}>yarn add react-native-vector-icons</Text>
-                </View>
+                <SectionGrid
+                    itemDimension={Dimensions.get("window").width / 4}
+                    sections={searchData}
+                    renderItem={({ item, section, index }) => (
+                        <TouchableNativeFeedback
+                            background={TouchableNativeFeedback.Ripple("#000")}
+                            onPress={() => {
+
+                                props.navigation.push("IconInfo", { item: item, section: section });
+                            }}
+                        >
+                            <View style={{
+                                backgroundColor: "#1E1E1E", padding: fontCustomSize(10),
+                                justifyContent: 'center', alignItems: 'center'
+                            }}>
+                                <IconType item={item} section={section} index={index} size={fontCustomSize(40)} />
+                                <Text style={{
+                                    marginTop: 10, fontSize: fontCustomSize(14),
+                                    fontFamily: "Regular", color: "white"
+                                }}>{item}</Text>
+                            </View>
+                        </TouchableNativeFeedback>
+                    )}
+                    renderSectionHeader={({ section }) => <Text style={{ backgroundColor: "#000", paddingBottom: 10, paddingTop: 10, fontFamily: "Bold", color: "white", fontSize: fontCustomSize(16) }} >{section.title}</Text>}
+                />
+
             </View >
         </ScrollView>
     );
