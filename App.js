@@ -9,6 +9,7 @@ import Store from './src/Mobx/Store';
 import { Observer } from 'mobx-react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Contact from './src/Contact';
+import Installation from './src/Installation';
 
 const StackNavigator = createStackNavigator();
 const DrawerNavigator = createDrawerNavigator();
@@ -31,10 +32,10 @@ export default App = () => {
         () => (
           <NavigationContainer>
             <DrawerNavigator.Navigator
-              drawerContentOptions={{ activeBackgroundColor: "#d4d4d4", inactiveBackgroundColor: 'black', labelStyle: { color: "white" }, contentContainerStyle: { backgroundColor: 'black', flex: 1 } }}
+              drawerContentOptions={{ activeBackgroundColor: "#202020", inactiveBackgroundColor: 'black', labelStyle: { color: "white" }, contentContainerStyle: { backgroundColor: 'black', flex: 1 } }}
             >
               <DrawerNavigator.Screen component={StackNavigationFunc} name="HomeDraw" options={{ title: "Home", headerTintColor: "#fff", headerStyle: { backgroundColor: "#1F1F1F", elevation: fontCustomSize(8) } }} />
-              <DrawerNavigator.Screen component={IconInfo} name="InstallDraw" options={{ title: "Installation", headerTintColor: "#fff", headerStyle: { backgroundColor: "#1F1F1F", elevation: fontCustomSize(8) } }} />
+              <DrawerNavigator.Screen component={Installation} name="InstallDraw" options={{ title: "Installation", headerTintColor: "#fff", headerStyle: { backgroundColor: "#1F1F1F", elevation: fontCustomSize(8) } }} />
               <DrawerNavigator.Screen component={Contact} name="ContactDraw" options={{ title: "Contact Us", headerTintColor: "#fff", headerStyle: { backgroundColor: "#1F1F1F", elevation: fontCustomSize(8) } }} />
             </DrawerNavigator.Navigator>
           </NavigationContainer>

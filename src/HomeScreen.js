@@ -121,7 +121,7 @@ export default HomeScreen = ({ navigation }) => {
                     </TouchableNativeFeedback>
                 )}
                 renderSectionHeader={({ section }) => (
-                    <Text style={{ backgroundColor: "#000", paddingBottom: 10, paddingTop: 10, fontFamily: "Bold", color: "white", fontSize: fontCustomSize(16) }} >{section.title}</Text>
+                    <Text style={{ backgroundColor: "#000", paddingBottom: 10, paddingTop: 10, paddingLeft: 10, fontFamily: "Bold", color: "white", fontSize: fontCustomSize(16) }} >{section.title}</Text>
                 )}
             />);
         }
